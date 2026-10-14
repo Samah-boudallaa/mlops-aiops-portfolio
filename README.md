@@ -96,4 +96,3 @@ Le site est publié avec GitHub Pages : Settings, Pages, branche `main`, dossier
 - E-mail : [samahboudallaa@gmail.com](mailto:samahboudallaa@gmail.com)
 - LinkedIn : [samah-boudallaa-92409a329](https://www.linkedin.com/in/samah-boudallaa-92409a329)
 - GitHub : [Samah-boudallaa](https://github.com/Samah-boudallaa)
--
