@@ -93,6 +93,9 @@ footer a.ic{gap:7px}
 .pl{color:var(--acc);font-weight:600;text-decoration:none;border-bottom:1px solid transparent;transition:.2s}.pl::after{content:" \2197";font-size:.85em}.pl:hover{border-color:currentColor}
 .tw tr:hover td{background:var(--glow)}
 .card{position:relative}.card::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity .3s;background:radial-gradient(280px circle at var(--mx,50%) var(--my,50%),var(--glow),transparent 70%)}.card:hover::after{opacity:1}
+#toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,20px);background:var(--ink);color:var(--bg);padding:12px 20px;border-radius:12px;font:600 15px var(--s);opacity:0;pointer-events:none;transition:.3s;z-index:60;max-width:92vw;text-align:center}#toast.on{opacity:1;transform:translate(-50%,0)}
+#fs{font-size:14.5px;min-height:1.4em;margin:0}
+.hp{position:absolute!important;left:-9999px!important;width:1px!important;height:1px!important;opacity:0!important;pointer-events:none!important}
 @media print{#bg,header,footer,.pal{display:none}body{background:#fff}}
 </style></head><body><canvas id="bg" aria-hidden="true"></canvas><div id="hd"></div>
 <main><section class="pg" id="p-home">
@@ -100,7 +103,7 @@ footer a.ic{gap:7px}
 <div class="tag"><span class="cur">&gt;</span> <span id="ty" data-r="Orientation MLOps / AIOps|Data Engineering|Pipelines ML en production|Supervision et observabilité" data-re="MLOps / AIOps focus|Data Engineering|ML pipelines in production|Monitoring and observability">Orientation MLOps / AIOps</span></div>
 <h1 data-en="I build ML pipelines that are <em>tested, containerized and monitored</em>.">Je construis des pipelines ML <em>testés, conteneurisés et supervisés</em>.</h1>
 <p class="lead" data-en="Bachelor Data Science student at EST Kelâat des Sraghna, after a DUT in Data Engineering. I connect data, model and production: FastAPI, Docker, CI and Prometheus / Grafana monitoring. This portfolio answers the RED TIC MLOps / AIOps Engineer job posting point by point.">Étudiante en Bachelor Data Science à l'EST Kelâa des Sraghna, après un DUT en Ingénierie des Données. Je relie la donnée, le modèle et sa mise en production : API FastAPI, Docker, intégration continue et monitoring Prometheus / Grafana. Ce portfolio répond point par point à l'offre MLOps / AIOps Engineer de RED TIC.</p>
-<div class="row"><a class="btn p ic dlc" href="CV_Samah_Boudallaa.pdf" download data-en="Download my CV">Télécharger mon CV</a><a class="btn" href="#/projets" data-en="See my projects">Voir mes projets</a><a class="btn ic gh" href="https://github.com/Samah-boudallaa" target="_blank" rel="noopener">GitHub</a><a class="btn ic lin" href="https://www.linkedin.com/in/samah-boudallaa-92409a329" target="_blank" rel="noopener">LinkedIn</a></div>
+<div class="row"><a class="btn p ic dlc" href="Samah_Boudallaa_CV_MLOps_AIOps.pdf" data-cv data-en="Download my CV">Télécharger mon CV</a><a class="btn" href="#/projets" data-en="See my projects">Voir mes projets</a><a class="btn ic gh" href="https://github.com/Samah-boudallaa" target="_blank" rel="noopener">GitHub</a><a class="btn ic lin" href="https://www.linkedin.com/in/samah-boudallaa-92409a329" target="_blank" rel="noopener">LinkedIn</a></div>
 <div class="kpis rv">
 <div class="k"><b data-n="443154">0</b><span data-en="records processed (ETL)">enregistrements traités (ETL)</span></div>
 <div class="k"><b>&lt; <span data-n="100">0</span> ms</b><span data-en="read time, vs 15 to 30 s direct access">lecture, contre 15 à 30 s en accès direct</span></div>
@@ -168,12 +171,29 @@ footer a.ic{gap:7px}
 <div class="ct">
 <div class="card"><h3 data-en="Send a message">Envoyer un message</h3><form id="fm" style="margin-top:14px">
 <input name="n" placeholder="Nom / Name" required><input name="e" type="email" placeholder="Email" required><input name="s" placeholder="Objet / Subject"><textarea name="m" placeholder="Message" required></textarea>
-<button class="btn p" type="submit" data-en="Open my mail app">Ouvrir ma messagerie</button></form></div>
+<input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+<button class="btn p" type="submit" data-en="Send message">Envoyer le message</button><p id="fs" role="status" aria-live="polite"></p></form></div>
 <div class="card"><h3 data-en="Direct contact">Contact direct</h3><div class="dc"><div class="em"><a class="btn p ic mail" href="mailto:samahboudallaa@gmail.com">samahboudallaa@gmail.com</a><button class="btn cpb" id="cp" type="button" data-en="Copy">Copier</button></div><a class="btn ic lin" href="https://www.linkedin.com/in/samah-boudallaa-92409a329" target="_blank" rel="noopener">LinkedIn</a><a class="btn ic gh" href="https://github.com/Samah-boudallaa" target="_blank" rel="noopener">GitHub</a></div></div>
 </div></div></section></section></main><div id="ft"></div><script>(function(){
 var B='',R=document.documentElement;
 function st(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){}}
 var lang=st('l')||'fr';
+var MAIL='samahboudallaa@gmail.com',CV='Samah_Boudallaa_CV_MLOps_AIOps.pdf';
+/* ENVOI DU FORMULAIRE
+   Option recommandée (la plus fiable, sans mail d'activation) : Web3Forms.
+   1) Allez sur https://web3forms.com, saisissez samahboudallaa@gmail.com, recevez la clé par mail.
+   2) Collez la clé ci-dessous. Sans clé, le site utilise FormSubmit (activation par mail requise). */
+var W3K='';
+var tt=document.createElement('div');tt.id='toast';tt.setAttribute('role','status');document.body.appendChild(tt);var tmr;
+function toast(m){tt.textContent=m;tt.classList.add('on');clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove('on')},4200)}
+function dlCV(){var fr=lang!=='en';
+ if(location.protocol==='file:'){window.open(CV,'_blank');return}
+ fetch(CV,{cache:'no-store'}).then(function(r){if(!r.ok)throw new Error(r.status);return r.blob()}).then(function(b){
+  var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([b],{type:'application/pdf'}));a.download='CV_Samah_Boudallaa.pdf';document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(a.href)},5000);
+  toast(fr?'CV téléchargé.':'CV downloaded.')}).catch(function(){
+  toast(fr?'CV introuvable : le fichier « '+CV+' » doit être à la racine du dépôt.':'CV not found: the file "'+CV+'" must be in the repository root.')})}
+document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('[data-cv]');if(a){e.preventDefault();dlCV()}});
+
 var nav=[['','Accueil','Home','home'],['','Projets','Projects','projets'],['','Parcours','Journey','parcours'],['','Formation','Education','formation'],['','Contact','Contact','contact']];
 document.getElementById('hd').innerHTML='<header><div class="w"><a class="logo" href="#/home">Samah <i>Boudallaa</i></a><nav aria-label="Menu">'+
 nav.map(function(n){return '<a href="#/'+n[3]+'" data-p="'+n[3]+'" data-en="'+n[2]+'">'+n[1]+'</a>'}).join('')+'</nav>'+
@@ -199,7 +219,62 @@ document.querySelectorAll('[data-f]').forEach(function(b){b.onclick=function(){v
 document.querySelectorAll('.pj').forEach(function(c){c.style.display=(f==='all'||(' '+c.dataset.t+' ').indexOf(' '+f+' ')>-1)?'':'none'})}});
 // contact
 var cp=document.getElementById('cp');if(cp)cp.onclick=function(){var s=function(){var o=cp.innerHTML;cp.textContent=lang==='en'?'Copied ✓':'Copié ✓';setTimeout(function(){cp.innerHTML=o},1600)};if(navigator.clipboard)navigator.clipboard.writeText('samahboudallaa@gmail.com').then(s,s);else s()};
-var fm=document.getElementById('fm');if(fm)fm.onsubmit=function(e){e.preventDefault();var d=new FormData(fm);location.href='mailto:samahboudallaa@gmail.com?subject='+encodeURIComponent(d.get('s')||'Contact')+'&body='+encodeURIComponent((d.get('m')||'')+'\n\n— '+(d.get('n')||'')+' ('+(d.get('e')||'')+')')};
+var fm=document.getElementById('fm');
+if(fm)fm.onsubmit=function(e){
+  e.preventDefault();
+  var d=new FormData(fm),
+      btn=fm.querySelector('button[type=submit]'),
+      fs=document.getElementById('fs'),
+      fr=lang!=='en',
+      o=btn.innerHTML,
+      sub=d.get('s')||(fr?'Message depuis le portfolio':'Message from the portfolio'),
+      body=(d.get('m')||'')+'\n\n- '+(d.get('n')||'')+' ('+(d.get('e')||'')+')';
+  if(d.get('website'))return; // anti-spam (champ piège)
+  function fallback(reason){
+    var g='https://mail.google.com/mail/?view=cm&fs=1&to='+MAIL+'&su='+encodeURIComponent(sub)+'&body='+encodeURIComponent(body),
+        m='mailto:'+MAIL+'?subject='+encodeURIComponent(sub)+'&body='+encodeURIComponent(body);
+    fs.style.color='var(--mute)';
+    fs.innerHTML=(reason?reason+' ':'')+(fr?'Écrivez-moi via ':'Write to me via ')+
+      '<a class="pl" href="'+g+'" target="_blank" rel="noopener">Gmail</a> '+(fr?'ou':'or')+
+      ' <a class="pl" href="'+m+'">'+(fr?'votre application mail':'your mail app')+'</a>.';
+  }
+  function done(){btn.disabled=false;btn.innerHTML=o}
+  fs.textContent='';
+  if(!W3K&&location.protocol==='file:'){
+    fallback(fr?'Envoi impossible depuis un fichier local : ouvrez le site via GitHub Pages ou un serveur.':'Sending does not work from a local file: open the site via GitHub Pages or a server.');
+    return;
+  }
+  btn.disabled=true;btn.textContent=fr?'Envoi en cours…':'Sending…';
+  var url,payload;
+  if(W3K){
+    url='https://api.web3forms.com/submit';
+    payload={access_key:W3K,name:d.get('n'),email:d.get('e'),subject:sub,message:d.get('m'),from_name:'Portfolio Samah Boudallaa',botcheck:''};
+  }else{
+    url='https://formsubmit.co/ajax/'+MAIL;
+    payload={name:d.get('n'),email:d.get('e'),_replyto:d.get('e'),_subject:sub,message:d.get('m'),_captcha:'false',_template:'table'};
+  }
+  fetch(url,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(payload)})
+  .then(function(r){return r.json().catch(function(){return {}})})
+  .then(function(j){
+    if(j&&(j.success===true||j.success==='true')){
+      fm.reset();
+      fs.style.color='var(--acc2)';
+      fs.textContent=fr?'Message envoyé. Merci, je vous réponds rapidement.':'Message sent. Thank you, I will reply soon.';
+      toast(fr?'Message envoyé.':'Message sent.');
+    }else{
+      var msg=(j&&j.message)||'';
+      if(/activ/i.test(msg)){
+        fallback(fr?'Le formulaire attend son activation (un mail a été envoyé à '+MAIL+'). En attendant,':'The form is waiting for activation (an email was sent to '+MAIL+'). Meanwhile,');
+      }else{
+        fallback(fr?'Envoi automatique indisponible.':'Automatic sending is unavailable.');
+      }
+    }
+  })
+  .catch(function(){
+    fallback(fr?'Connexion au service d\'envoi impossible (réseau ou bloqueur de pub).':'Could not reach the sending service (network or ad blocker).');
+  })
+  .then(done);
+};
 // barre de progression, halo curseur, effet 3D, machine à écrire
 var pg=document.createElement('div');pg.id='pg';document.body.appendChild(pg);
 addEventListener('scroll',function(){var h=R.scrollHeight-innerHeight;pg.style.width=(h>0?scrollY/h*100:0)+'%'},{passive:true});
@@ -238,7 +313,7 @@ add('<span class="pr">$</span>help');add(D[lang].help);
 // palette de commandes
 var pal=document.createElement('div');pal.id='pal';pal.innerHTML='<div><input id="pi" placeholder="Aller à… / Go to…" aria-label="Menu rapide"><ul id="pl"></ul></div>';document.body.appendChild(pal);
 var GO=function(h){return function(){location.hash=h}},OP=function(u){return function(){open(u,'_blank')}};
-var IT=[['Accueil','Home',GO('#/home')],['Projets','Projects',GO('#/projets')],['Parcours','Journey',GO('#/parcours')],['Formation','Education',GO('#/formation')],['Contact','Contact',GO('#/contact')],['Changer de thème','Toggle theme',function(){document.getElementById('th').click()}],['Changer de langue','Switch language',function(){document.getElementById('lg').click()}],['Télécharger le CV','Download CV',function(){var a=document.createElement('a');a.href='CV_Samah_Boudallaa.pdf';a.download='';a.click()}],['Écrire un e-mail','Send an email',function(){location.href='mailto:samahboudallaa@gmail.com'}],['GitHub','GitHub',OP('https://github.com/Samah-boudallaa')],['LinkedIn','LinkedIn',OP('https://www.linkedin.com/in/samah-boudallaa-92409a329')]],sel=0,vis=[];
+var IT=[['Accueil','Home',GO('#/home')],['Projets','Projects',GO('#/projets')],['Parcours','Journey',GO('#/parcours')],['Formation','Education',GO('#/formation')],['Contact','Contact',GO('#/contact')],['Changer de thème','Toggle theme',function(){document.getElementById('th').click()}],['Changer de langue','Switch language',function(){document.getElementById('lg').click()}],['Télécharger le CV','Download CV',dlCV],['Écrire un e-mail','Send an email',function(){location.href='mailto:samahboudallaa@gmail.com'}],['GitHub','GitHub',OP('https://github.com/Samah-boudallaa')],['LinkedIn','LinkedIn',OP('https://www.linkedin.com/in/samah-boudallaa-92409a329')]],sel=0,vis=[];
 var pi=document.getElementById('pi'),pl=document.getElementById('pl');
 function draw(){var q=pi.value.toLowerCase();vis=IT.filter(function(i){return (i[0]+i[1]).toLowerCase().indexOf(q)>-1});sel=Math.min(sel,Math.max(vis.length-1,0));pl.innerHTML=vis.map(function(i,n){return '<li class="'+(n===sel?'sel':'')+'" data-i="'+n+'">'+(lang==='en'?i[1]:i[0])+'<span>↵</span></li>'}).join('')}
 function go(n){var i=vis[n];if(i){pal.classList.remove('on');i[2]()}}
