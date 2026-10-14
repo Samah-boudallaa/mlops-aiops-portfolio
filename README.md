@@ -46,29 +46,13 @@ Groupe n° 2. Poste visé : [MLOps / AIOps Engineer, RED TIC](https://verscdi.co
 
 ---
 
-## Preuves visuelles
-
-Les captures sont dans le dossier [`assets/`](assets/).
-
-| Capture | Ce qu'elle montre |
-|---|---|
-| `assets/grafana-dashboard.png` | Dashboard Grafana du projet Smart Data Pipeline |
-| `assets/docker-compose-ps.png` | Les 6 conteneurs du pipeline en fonctionnement |
-| `assets/github-actions-graphgen.png` | Intégration continue GraphGen (exécution réussie) |
-| `assets/pytest-graphgen.png` | Les 12 tests pytest qui passent |
-| `assets/architecture-smart-data-pipeline.png` | Schéma : Kafka, traitement, Isolation Forest, Prometheus, Grafana |
-| `assets/og-image.png` | Aperçu affiché lors du partage du lien (1200 x 630) |
-
----
-
 ## Structure du dépôt
 
 ```
 mlops-aiops-portfolio/
 ├── index.html                 Portfolio (HTML, CSS et JavaScript, un seul fichier)
-├── CV_Samah_Boudallaa.pdf     CV adapté à l'offre, version validée par le groupe
 ├── README.md                  Ce fichier
-└── assets/                    Captures d'écran, schéma, image de partage
+└── assets/                    Samah_Boudallaa_CV_MLOps_AIOps.pdf
 ```
 
 ## Technologies
